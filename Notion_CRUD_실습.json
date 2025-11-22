@@ -1,0 +1,238 @@
+{
+  "name": "Notion CRUD 실습",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -336
+      ],
+      "id": "438847df-e311-4218-9e88-de095b7c7c08",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "b8220692-0221-4a0b-906b-82808be7385c",
+          "mode": "list",
+          "cachedResultName": "n8n 실습 Database",
+          "cachedResultUrl": "https://www.notion.so/b822069202214a0b906b82808be7385c"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Name|title",
+              "title": "={{ $json.title }}"
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "={{ $json.status }}"
+            },
+            {
+              "key": "Priority|select",
+              "selectValue": "={{ $json.priority }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -128,
+        -64
+      ],
+      "id": "8f169308-ac51-459a-949d-f3b8167cfa19",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "gBQOf7tWoo6KICBy",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "b8220692-0221-4a0b-906b-82808be7385c",
+          "mode": "list",
+          "cachedResultName": "n8n 실습 Database",
+          "cachedResultUrl": "https://www.notion.so/b822069202214a0b906b82808be7385c"
+        },
+        "filterType": "json",
+        "filterJson": "={   \"property\": \"Status\",   \"select\": {     \"equals\": \"To Do\"   } }",
+        "options": {
+          "sort": {
+            "sortValue": [
+              {
+                "key": "Due Date|date",
+                "direction": "descending"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        -336
+      ],
+      "id": "2553fe86-d1f6-400f-bcd4-1b3af1ba148c",
+      "name": "Get many database pages",
+      "credentials": {
+        "notionApi": {
+          "id": "gBQOf7tWoo6KICBy",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "2b09e465cae38037a5daf3cde77cf9d3",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Done"
+            },
+            {
+              "key": "Priority|select",
+              "selectValue": "Medium"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        -336
+      ],
+      "id": "a52e2c88-00ea-4b31-bc3d-16c7ab8457d5",
+      "name": "Update a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "gBQOf7tWoo6KICBy",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "archive",
+        "pageId": {
+          "__rl": true,
+          "value": "2b09e465cae3804f84e7e3c50c60c711",
+          "mode": "id"
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -416,
+        -336
+      ],
+      "id": "f3f0d3c8-e3e4-4460-8766-e86f15efde02",
+      "name": "Archive page",
+      "credentials": {
+        "notionApi": {
+          "id": "gBQOf7tWoo6KICBy",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/create-task",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -528,
+        -64
+      ],
+      "id": "d4d9ed7f-bfdf-4efb-9923-deea798326c7",
+      "name": "Webhook",
+      "webhookId": "1d5f01ee-0ff9-467a-87f3-6a27a1a659f6"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"title\": \"{{ $json.body.task_name }}\",\n  \"status\": \"{{ $json.body.status }}\",\n  \"priority\": \"{{ $json.body.priority }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        -64
+      ],
+      "id": "4393cb3e-917a-4c3f-a52a-4d2876c30b41",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Archive page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6cff43b6-2d0d-4965-9ee3-927a08903483",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d939b2fc24413e8abb6203f4c29aad1f5ad51b7bee354549c230b5d9a270e939"
+  },
+  "id": "k54T1uXUlX2pB2fq",
+  "tags": []
+}

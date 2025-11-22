@@ -1,0 +1,228 @@
+{
+  "name": "n8n_mcp_server",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "d7b7d570-e582-4988-849b-2a6d8923c789"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        -176
+      ],
+      "id": "ccdd06fa-1071-4cc7-858b-9fcecb6a63c6",
+      "name": "MCP Server Trigger",
+      "webhookId": "d7b7d570-e582-4988-849b-2a6d8923c789"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        32
+      ],
+      "id": "866834b3-c1cc-44b1-9c54-a4c5605575e9",
+      "name": "Send a message in Gmail",
+      "webhookId": "f9e72bfd-39a4-4293-859c-9ad154413963",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "sDYdNXGBuYdjlr6v",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
+      "position": [
+        -544,
+        64
+      ],
+      "id": "3c8e1c99-8272-490f-9d5d-7b5d0ffdff38",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "jikim@imguru.co.kr",
+          "mode": "list",
+          "cachedResultName": "김정인_C1"
+        },
+        "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -720,
+        64
+      ],
+      "id": "f4218818-b9bb-4e0b-82b7-192726107a15",
+      "name": "Get many events in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "KQxLUA1l9ScaHvEk",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1KEqgz5tOWBYVLK6_ZXCQZ8bZM_nrGpqCcBA-o_SpwiY",
+          "mode": "list",
+          "cachedResultName": "주소록",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KEqgz5tOWBYVLK6_ZXCQZ8bZM_nrGpqCcBA-o_SpwiY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "주소록",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KEqgz5tOWBYVLK6_ZXCQZ8bZM_nrGpqCcBA-o_SpwiY/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -128,
+        48
+      ],
+      "id": "60412233-c6bd-4fb8-a9b3-396736152561",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6Xh72SYQ58IdlHRB",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "카카오톡으로 보내는 메시지 도구",
+        "method": "POST",
+        "url": "https://kapi.kakao.com/v2/api/talk/memo/default/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "template_object",
+              "value": "={     \n  \"object_type\": \"text\",     \n  \"text\": \"클로드가 보내는 메시지 테스트\",\n  \"link\": {\n        \"web_url\": \"https://developers.kakao.com\"\n    }\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        -336,
+        48
+      ],
+      "id": "e341f011-7324-467d-b538-39e418d726c1",
+      "name": "HTTP Request",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "3HvDc9iAmHHNxk1G",
+          "name": "Kakao credential"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a9e4400c-3006-44c0-b585-2feae07336f2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7cbd73fc6897b517cdad89157addf127e6e845ad080e7385450ca8d3c68c3be6"
+  },
+  "id": "ERdOt1N2udTfEtcM",
+  "tags": []
+}
