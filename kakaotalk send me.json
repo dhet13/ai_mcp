@@ -1,0 +1,81 @@
+{
+  "name": "kakaotalk send me",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kapi.kakao.com/v2/api/talk/memo/default/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "template_object",
+              "value": "={     \n  \"object_type\": \"text\",     \n  \"text\": \"테스트 메시지\",\n  \"link\": {\n        \"web_url\": \"https://developers.kakao.com\"\n    }\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -64,
+        -96
+      ],
+      "id": "d8b8cb4f-aa4a-4756-bd4f-65cf25ca0c14",
+      "name": "Send me",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "3HvDc9iAmHHNxk1G",
+          "name": "Kakao credential"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        -96
+      ],
+      "id": "d6b7a456-e71d-44cd-9cdb-f855e2a091ac",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Send me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8cd4a11e-7f3e-4ec0-bf09-140cbf561ae2",
+  "meta": {
+    "instanceId": "7cbd73fc6897b517cdad89157addf127e6e845ad080e7385450ca8d3c68c3be6"
+  },
+  "id": "SxKzlGSVoRSrBGb1",
+  "tags": []
+}
